@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Creador de Interacciones IMS-QTI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/main.css">
+    <!-- <link rel="stylesheet" type="text/css" href="bootstrap/css/docs.min.css"> -->  
+    <script type="text/javascript" src="../static/js/jquery-2.1.4.js"></script> 
+    <script type="text/javascript" src="../static/js/bootstrap.js"></script>
+
+    <script>
+        $(document).ready(function() {
+        var heights = $(".panel-body").map(function() {
+            return $(this).height();
+        }).get(),
+     
+        maxHeight = Math.max.apply(null, heights);
+     
+        $(".panel-body").height(maxHeight);
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <!-- navbar superior -->
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">       
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>              
+                    </button>           
+                    <a class="navbar-brand" href="#">       
+                        <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                    </a>            
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">                        
+                                {% if user %}
+                                    <b>Hola, {{user}}</b>
+                                {% else %}
+                                    <b>Hola, Invitado</b>
+                                {% endif %}
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <form class="navbar-form navbar-left">
+                                        <div>
+                                            <b>Ingresar con mi cuenta</b>
+                                        <div>
+                                        <div class="form-group col-md-12">
+                                            <input type="text" class="form-control" placeholder="Usuario">                              
+                                            <input type="password" class="form-control" placeholder="Constraseña">
+                                        </div>
+                                        <div class="col-md-8 col-md-offset-2">                                      
+                                            <a class="btn btn-success btn-block">Login</a>
+                                        </div>
+                                    </form>
+                                </li>
+                                <li>
+                                    <a href="templates/sign-up.html">Crearse un cuenta</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div> <!-- /. navbar-collapse -->
+            </div> <!-- /. container-fluid -->
+        </nav>
+    </header>
+    
+        <!-- child template -->
+        {% block content %}{% endblock %}
+     
+        <!-- errors -->
+        {% if error %}
+        <p class="error"><strong>Error:</strong> {{ error }}</p>
+        {% endif %}
+     
+        <!-- messages -->
+        {% for message in get_flashed_messages() %}
+        {{ message }}
+        {% endfor %}
+    
+    <footer>
+        <h6>
+            Creado desde <a target="_blank" href="http://www.manejandodatos.es">Manejando datos</a>
+        </h6>
+    </footer>
+</body>
+</html>

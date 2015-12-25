@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Jumbotron -->
+<div class="jumbotron jumbotron-degrade">
+	<h1>Generador de Interacciones IMS-QTI</h1>		
+</div>
+<div class="well col-md-10 col-md-offset-1">			
+	<div class="col-md-4">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Crear Interacción</h3>
+			</div>
+			<div class="panel-body">
+				<a class="btn btn-success btn-block">Seleccion Múltiple</a>
+				<a class="btn btn-success btn-block">Términos Pareados</a>
+				<a class="btn btn-success btn-block">Ordenamiento</a>
+				<a class="btn btn-success btn-block">Completar Frase</a>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="panel panel-primary">	
+			<div class="panel-heading">			
+				<h3 class="panel-title">Tus Preguntas</h3>
+			</div>
+			<div class="panel-body">
+				<div class="col-md-12" align="center">
+					<p><b>No estás logueado</b><br>
+						Puedes almacenar y ver tus preguntas en cualquier momento además de compartirlas con todo el mundo.
+					</p>
+				</div>	
+				<div class="col-md-6 col-md-offset-3">
+					<a class="btn btn-success btn-block">Crear Cuenta</a>
+					<a class="btn btn-success btn-block">Login</a>
+				</div>
+			</div>			
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Últimas preguntas añadidas</h3>
+			</div>
+			<div class="panel-body">
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
