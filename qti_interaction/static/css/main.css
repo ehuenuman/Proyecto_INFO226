@@ -22,14 +22,14 @@ body {
   font-weight: bold;
 }
 
-.respuesta-formulario-false {
+.respuesta-formulario-error {
   font-weight: bold;
-  color: green;
+  color: red;
 }
 
-.respuesta-formulario-true {
+.respuesta-formulario-correcto {
   font-weight: bold;
-  color: red; 
+  color: green; 
 }
 
 .error-input-formulario {
