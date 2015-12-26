@@ -17,14 +17,14 @@ def conectar():
 def verifica_usuario(usuario):
     """
     Realiza la consulta por un usuario en especifico.
-    Retorna True si el usuario es encontrado en la base de datos
+    Retorna True si el usuario esta disponible para ser usado.
     """    
     conn = conectar()
     cursor = conn.cursor()
     sql = 'SELECT * FROM usuario WHERE user = "{}"'.format(usuario)
     cursor.execute(sql)
     if len(cursor.fetchall()) > 0:       
-        return True
-    else:    
         return False
+    else:    
+        return True
     cursor.close()
