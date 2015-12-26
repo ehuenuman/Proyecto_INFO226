@@ -1,0 +1,41 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body { 
+	padding-top: 50px;
+	padding-bottom: 50px; 
+}
+
+.footer {
+	position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 50px;
+  background-color: #000;
+}
+
+.container .text-muted {
+  margin: 15px 0;
+  font-weight: bold;
+}
+
+.respuesta-formulario-false {
+  font-weight: bold;
+  color: green;
+}
+
+.respuesta-formulario-true {
+  font-weight: bold;
+  color: red; 
+}
+
+.error-input-formulario {
+  border: 2px solid red;
+}
+
+.correcto-input-formulario {
+  border: 2px solid green;
+}

@@ -2,24 +2,14 @@
 <html>
 <head>
     <title>Creador de Interacciones IMS-QTI</title>
+    <meta charset = "utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../static/css/main.css">
     <!-- <link rel="stylesheet" type="text/css" href="bootstrap/css/docs.min.css"> -->  
     <script type="text/javascript" src="../static/js/jquery-2.1.4.js"></script> 
     <script type="text/javascript" src="../static/js/bootstrap.js"></script>
-
-    <script>
-        $(document).ready(function() {
-        var heights = $(".panel-body").map(function() {
-            return $(this).height();
-        }).get(),
-     
-        maxHeight = Math.max.apply(null, heights);
-     
-        $(".panel-body").height(maxHeight);
-        });
-    </script>
+    
 </head>
 <body>
     <header>
@@ -33,7 +23,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>              
                     </button>           
-                    <a class="navbar-brand" href="#">       
+                    <a class="navbar-brand" href="/" alt="Home">       
                         <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                     </a>            
                 </div>
@@ -63,7 +53,7 @@
                                     </form>
                                 </li>
                                 <li>
-                                    <a href="templates/sign-up.html">Crearse un cuenta</a>
+                                    <a href="#">Crearse un cuenta</a>
                                 </li>
                             </ul>
                         </li>
@@ -73,24 +63,13 @@
         </nav>
     </header>
     
-        <!-- child template -->
-        {% block content %}{% endblock %}
-     
-        <!-- errors -->
-        {% if error %}
-        <p class="error"><strong>Error:</strong> {{ error }}</p>
-        {% endif %}
-     
-        <!-- messages -->
-        {% for message in get_flashed_messages() %}
-        {{ message }}
-        {% endfor %}
+    <!-- child template -->
+    {% block content %}{% endblock %}
     
-    <footer>
-        <!-- Debe de ser un navbar footer -->
-        <h6>
-            Powered by <a target="_blank" href="http://www.gita.cl">Gita</a>
-        </h6>
+    <footer class="footer">
+        <div class="container">
+            <p class="text-muted">Powered by GITA</p>
+        </div>
     </footer>
 </body>
 </html>

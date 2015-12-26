@@ -1,9 +1,23 @@
-{% extends "base.html" %}
+{% extends "layout.html" %}
 {% block content %}
+
+<script>
+        $(document).ready(function() {
+        var heights = $(".panel-body").map(function() {
+            return $(this).height();
+        }).get(),
+     
+        maxHeight = Math.max.apply(null, heights);
+     
+        $(".panel-body").height(maxHeight);
+        });
+</script>
+
 <!-- Jumbotron -->
 <div class="jumbotron jumbotron-degrade">
 	<h1>Generador de Interacciones IMS-QTI</h1>		
 </div>
+<!-- Columnas principales -->
 <div class="well col-md-10 col-md-offset-1">			
 	<div class="col-md-4">
 		<div class="panel panel-primary">
@@ -30,7 +44,7 @@
 					</p>
 				</div>	
 				<div class="col-md-6 col-md-offset-3">
-					<a class="btn btn-success btn-block">Crear Cuenta</a>
+					<a class="btn btn-success btn-block" href="/sign-up">Crear Cuenta</a>
 					<a class="btn btn-success btn-block">Login</a>
 				</div>
 			</div>			

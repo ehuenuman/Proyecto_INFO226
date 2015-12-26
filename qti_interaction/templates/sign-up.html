@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<script type="text/javascript">
+  var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function(){	    
+        $("#usuario").blur(function(e){
+	        //obtenemos el texto introducido en el campo	        
+	        $.getJSON($SCRIPT_ROOT + '/verifica_usuario', {
+	           	usuario : $("#usuario").val()
+	        }, function(data) {
+		        if (data.result == true) {
+		        	$("#usuario_existe").text("Usuario no disponible");
+		        	$("#usuario_existe").removeClass('respuesta-formulario-false');
+		        	$("#usuario_existe").addClass('respuesta-formulario-true');
+		        	$('#usuario').removeClass('correcto-input-formulario');
+		        	$('#usuario').addClass('error-input-formulario');
+		        } else {
+		        	$("#usuario_existe").text("Usuario disponible");
+		        	$("#usuario_existe").removeClass('respuesta-formulario-true');
+		        	$("#usuario_existe").addClass('respuesta-formulario-false');
+		        	$('#usuario').removeClass('error-input-formulario');
+		        	$('#usuario').addClass('correcto-input-formulario');
+		        }
+		    });
+		    return false;
+		});
+	});	
+</script>
+
+<div style="opacity:0.8">
+	<div class="row">
+		<h1 class="col-md-offset-2 col-md-8 well">Nuevo Usuario</h1>
+	</div>
+	<div class="row">
+		<div class="col-md-offset-2 col-md-8 well">
+			<form class="form-horizontal" name="sign-up" action="{{ url_for('sign_up') }}" method="POST">
+				<div class="form-group form-group-lg">
+					<label class="col-md-3 control-label" for="titulo">Nombre Completo: </label>
+					<div class="col-md-8">
+						<input class="form-control" type="text" name="nombres" placeholder="Nombres Apellidos">
+					</div>
+				</div>
+				<div class="form-group form-group-lg">
+					<label class="col-md-3 control-label" for="titulo">email: </label>
+					<div class="col-md-8">
+						<input class="form-control" type="text" name="email" placeholder="micorreo@email.com">
+					</div>
+				</div>
+				<div class="form-group form-group-lg">
+					<label class="col-md-3 control-label" for="titulo">Usuario: </label>
+					<div class="col-md-8">
+						<input class="form-control" type="text" id="usuario" name="usuario" placeholder="Usuario con el que se identificara en el sistema">
+					</div>
+					<span class="col-md-offset-3 col-md-8" id="usuario_existe"></span>
+				</div>
+				<div class="form-group form-group-lg">
+					<label class="col-md-3 control-label" for="titulo">Contraseña: </label>
+					<div class="col-md-8">
+						<input class="form-control" type="password" name="password" placeholder="Contraseña que usara para ingresar a su cuenta">
+					</div>
+				</div>					
+				<div class="form-group form-group-lg">						
+					<button type="submit" class="btn btn-default btn-lg col-md-offset-5 col-md-2">Guardar</button>
+					<div class="col-md-3 col-md-offset-1">
+						{% if error == "200" %}
+							<p class="form-control-static" style="color:green">Entrada ingresada</p>
+						{% elif error == "401" %}
+							<p class="form-control-static" style="color:red">Entrada duplicada</p>
+						{% endif %}								
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>		
+</div>
+
+{% endblock %}
