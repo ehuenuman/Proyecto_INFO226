@@ -9,7 +9,7 @@
 	var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 </script>
 
-<div style="opacity:0.8">
+<div>
 	<div class="row">
 		<h1 class="col-md-offset-2 col-md-8 well">Registro de Usuario</h1>
 	</div>
@@ -52,7 +52,7 @@
 					<span class="col-md-offset-3 col-md-8" id="password_mensaje2"></span>
 				</div>					
 				<div class="form-group form-group-lg">						
-					<button type="button" class="btn btn-success btn-lg col-md-offset-6 col-md-2" onclick="validar_datos()">Registrarse</button>
+					<button type="button" class="btn btn-success btn-lg col-md-offset-5 col-md-2" onclick="validar_datos()">Registrarse</button>
 					<div class="col-md-10 col-md-offset-3">						
 						<span id="submit_mensaje" class="form-control-static respuesta-formulario-error"></span>	
 					</div>

@@ -1,6 +1,3 @@
-
-
-
 var valido = true;	
 
 $(document).ready(function(){	    
