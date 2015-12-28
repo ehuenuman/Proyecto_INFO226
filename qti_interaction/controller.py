@@ -19,6 +19,7 @@ def index():
 @app.route("/sign-up", methods=['GET', 'POST'])
 def sign_up():
     if request.method == "POST":
+        print("POST")
         nombres = (request.form["nombres"]).encode('utf-8')
         email = (request.form["email"]).encode('utf-8')
         usuario = (request.form["usuario"]).encode('utf-8')
@@ -33,11 +34,12 @@ def sign_up():
                                                      password)
                                         )
         if exito:
-            return render_template('main_window.html')
+            print("-------------------------")
+            return render_template('main_window.html', error="201")
         else:
             pass
-
     else:
+        print("GET")
         return render_template('sign-up.html')
 
 
