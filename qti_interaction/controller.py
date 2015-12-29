@@ -33,8 +33,7 @@ def sign_up():
                                                      email,
                                                      password)
                                         )
-        if exito:
-            print("-------------------------")
+        if exito:        
             return render_template('main_window.html', error="201")
         else:
             pass

@@ -10,9 +10,7 @@
     	$(".panel-body").height(maxHeight);
     	
     	{% if error == "201" %}
-			$("#success_users").modal();	
-    	{% else %}
-    		$("#success_users").modal();
+			$("#success_users").modal();
     	{% endif %}
 
     	$('#success_users').on('hidden.bs.modal', function(e) {  
