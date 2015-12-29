@@ -15,17 +15,17 @@
 
     	$('#success_users').on('hidden.bs.modal', function(e) {    		
 			$('#menu_login').click();			
-			$('#input_user').focus();			
+			$('#email_login').focus();			
 		})
 
 		$('#login_button').click(function(e) {  			
   			$('#menu_login').click();
-			$('#input_user').focus();
+			$('#email_login').focus();
 		});
 
 		{% if error == "401" %}			
 			$('#menu_login').click();
-			$('#input_user').focus();		
+			$('#email_login').focus();		
     	{% endif %}
     });
 </script>
@@ -61,7 +61,7 @@
 					</p>
 				</div>	
 				<div class="col-md-6 col-md-offset-3">
-					<a class="btn btn-success btn-block" href="/sign-up">Crear Cuenta</a>
+					<a class="btn btn-success btn-block" href="{{ url_for('sign_up') }}">Crear Cuenta</a>
 					<a class="btn btn-success btn-block" id="login_button">Login</a>
 				</div>
 			</div>			
@@ -88,7 +88,7 @@
 	    	</div>
 	    	<div class="modal-body" align="center">
 	      		<p>Ahora ya puede disfrutar de los beneficios de tener un cuenta. 
-	      			<br>Ingresa con tu usuario y contraseña</p>
+	      			<br>Ingresa con tu email y contraseña</p>
 	    	</div>	    	
 	  	</div>  
 	</div>
