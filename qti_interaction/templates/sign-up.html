@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<script type="text/javascript" src="../static/js/sign-up.js"></script>
+{% endblock %}
+
+{% block content %}
+<script type="text/javascript">
+	var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+
+<div>
+	<div class="row">
+		<h1 class="col-md-offset-2 col-md-8 well">Registro de Usuario</h1>
+	</div>
+	<div class="row">
+		<div class="col-md-offset-2 col-md-8 well">
+			<form class="form-horizontal" name="sign_up" action="{{ url_for('sign_up') }}" method="POST">
+				<div class="form-group form-group-lg">
+					<label class="col-md-3 control-label" for="nombres">Nombre Completo: </label>
+					<div class="col-md-8">
+						<input id="nombres" onblur="valida_nombres()" class="form-control" type="text" name="nombres" placeholder="Nombres y Apellidos">
+					</div>
+					<span class="col-md-offset-3 col-md-8" id="nombre_mensaje"></span>
+				</div>
+				<div class="form-group form-group-lg">
+					<label class="col-md-3 control-label" for="email">email: </label>
+					<div class="col-md-8">
+						<input id="email" onblur="valida_email()" class="form-control" type="text" name="email" placeholder="micorreo@email.com">
+					</div>
+					<span class="col-md-offset-3 col-md-8" id="email_mensaje"></span>
+				</div>
+				<div class="form-group form-group-lg">
+					<label class="col-md-3 control-label" for="usuario">Usuario: </label>
+					<div class="col-md-8">
+						<input class="form-control" onblur="valida_usuario()" type="text" id="usuario" name="usuario" placeholder="Usuario con el que se identificara en el sistema">
+					</div>
+					<span class="col-md-offset-3 col-md-8" id="usuario_mensaje"></span>
+				</div>
+				<div class="form-group form-group-lg">
+					<label class="col-md-3 control-label" for="password">Contraseña: </label>
+					<div class="col-md-8">
+						<input id="password" onblur="valida_pass()" class="form-control" type="password" name="password" placeholder="Contraseña que usara para ingresar a su cuenta">
+					</div>
+					<span class="col-md-offset-3 col-md-8" id="password_mensaje"></span>
+				</div>
+				<div class="form-group form-group-lg">
+					<label class="col-md-3 control-label" for="password2">Repetir contraseña: </label>
+					<div class="col-md-8">
+						<input id="password2" class="form-control" type="password" onkeyup="comparar_pass()" name="password2" placeholder="Reingrese la misma contraseña anterior">
+					</div>
+					<span class="col-md-offset-3 col-md-8" id="password_mensaje2"></span>
+				</div>					
+				<div class="form-group form-group-lg">						
+					<button type="button" class="btn btn-success btn-lg col-md-offset-5 col-md-2" onclick="validar_datos()">Registrarse</button>
+					<div class="col-md-10 col-md-offset-3">			
+						<span id="submit_mensaje" class="form-control-static respuesta-formulario-error"></span>	
+						{% if error == "500" %}
+							<p class="form-control-static respuesta-formulario-error">Error inesperado ha ocurrido.</p>
+						{% endif %}
+					</div>					
+				</div>
+			</form>
+		</div>
+	</div>		
+</div>
+
+{% endblock %}

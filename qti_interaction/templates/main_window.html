@@ -1,0 +1,98 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<script>
+    $(document).ready(function() {
+    	var heights = $(".panel-body").map(function() {
+        	return $(this).height();
+    }).get(),
+    	maxHeight = Math.max.apply(null, heights);
+    	$(".panel-body").height(maxHeight);
+    	
+    	{% if error == "201" %}					
+			$("#success_users").modal();			
+    	{% endif %}
+
+    	$('#success_users').on('hidden.bs.modal', function(e) {    		
+			$('#menu_login').click();			
+			$('#input_user').focus();			
+		})
+
+		$('#login_button').click(function(e) {  			
+  			$('#menu_login').click();
+			$('#input_user').focus();
+		});
+
+		{% if error == "401" %}			
+			$('#menu_login').click();
+			$('#input_user').focus();		
+    	{% endif %}
+    });
+</script>
+
+<!-- Jumbotron -->
+<div class="jumbotron">
+	<h1>Generador de Interacciones IMS-QTI</h1>		
+</div>
+<!-- Columnas principales -->
+<div class="well col-md-10 col-md-offset-1">			
+	<div class="col-md-4">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Crear Interacción</h3>
+			</div>
+			<div class="panel-body">
+				<a class="btn btn-success btn-block">Seleccion Múltiple</a>
+				<a class="btn btn-success btn-block">Términos Pareados</a>
+				<a class="btn btn-success btn-block">Ordenamiento</a>
+				<a class="btn btn-success btn-block">Completar Frase</a>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="panel panel-primary">	
+			<div class="panel-heading">			
+				<h3 class="panel-title">Tus Preguntas</h3>
+			</div>
+			<div class="panel-body">
+				<div class="col-md-12" align="center">
+					<p><b>No estás logueado</b><br>
+						Puedes almacenar y ver tus preguntas en cualquier momento además de compartirlas con todo el mundo.
+					</p>
+				</div>	
+				<div class="col-md-6 col-md-offset-3">
+					<a class="btn btn-success btn-block" href="/sign-up">Crear Cuenta</a>
+					<a class="btn btn-success btn-block" id="login_button">Login</a>
+				</div>
+			</div>			
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Últimas preguntas añadidas</h3>
+			</div>
+			<div class="panel-body">
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Modal Dialog, mensaje de exito al crear usuario -->
+<div class="modal fade" id="success_users" role="dialog">
+	<div class="modal-dialog modal-sm">
+	  	<!-- Modal content-->
+	  	<div class="modal-content">
+		    <div class="modal-header">
+	    	  <button type="button" class="close" data-dismiss="modal">&times;</button>
+	      	<h4 class="modal-title">Usuario creado exitosamente</h4>
+	    	</div>
+	    	<div class="modal-body" align="center">
+	      		<p>Ahora ya puede disfrutar de los beneficios de tener un cuenta. 
+	      			<br>Ingresa con tu usuario y contraseña</p>
+	    	</div>	    	
+	  	</div>  
+	</div>
+</div>
+</div>
+
+{% endblock %}
