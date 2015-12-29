@@ -55,8 +55,8 @@
 					<button type="button" class="btn btn-success btn-lg col-md-offset-5 col-md-2" onclick="validar_datos()">Registrarse</button>
 					<div class="col-md-10 col-md-offset-3">			
 						<span id="submit_mensaje" class="form-control-static respuesta-formulario-error"></span>	
-						{% if error == "201" %}
-							<p class="form-control-static" style="color:green">Entrada ingresada</p>
+						{% if error == "500" %}
+							<p class="form-control-static respuesta-formulario-error">Error inesperado ha ocurrido.</p>
 						{% endif %}
 					</div>					
 				</div>

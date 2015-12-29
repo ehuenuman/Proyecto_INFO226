@@ -61,7 +61,7 @@ def registrar_usuario(nombres, email, usuario, password):
                                                  (email),
                                                  (usuario),
                                                  (password)
-                                                )
+                                                 )
     try:
         cursor.execute(sql)
         conn.commit()
@@ -71,3 +71,35 @@ def registrar_usuario(nombres, email, usuario, password):
         print "Error al añadir nuevo usuario:", e.args[0]
         cursor.close()
         return False
+
+
+def get_email_pass(usuario):
+    """
+    Obtiene el email y el pass de un usuario en especifico.
+    Se asume que el usuario existe en la base de datos, es por ello que 
+    primero se debe de validar el usuario con el metodo verifica_usuario.
+    """
+    conn = conectar()
+    cursor = conn.cursor()
+    sql = 'SELECT email, password FROM usuario WHERE user = "{}"'.format(
+        usuario)
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    cursor.close()
+    return data
+
+
+def get_id_user(usuario):
+    """
+    Obtiene el registro id de un usuario especifico.
+    Se asume que el usuario existe en la base de datos, es por ello que primero
+    se debe de validar el usuario con el metodo verifica_usuario.
+    """
+    conn = conectar()
+    cursor = conn.cursor()
+    sql = 'SELECT id FROM usuario WHERE user = "{}"'.format(usuario)
+    cursor.execute(sql)
+    id_usuario = cursor.fetchall()
+    cursor.close()
+    return id_usuario
+

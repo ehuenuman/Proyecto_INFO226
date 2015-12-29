@@ -9,21 +9,24 @@
     	maxHeight = Math.max.apply(null, heights);
     	$(".panel-body").height(maxHeight);
     	
-    	{% if error == "201" %}
-			$("#success_users").modal();	
-    	{% else %}
-    		$("#success_users").modal();
+    	{% if error == "201" %}					
+			$("#success_users").modal();			
     	{% endif %}
 
-    	$('#success_users').on('hidden.bs.modal', function(e) {  
-			$('#menu_login').click();
-			$('#input_user').focus();	
+    	$('#success_users').on('hidden.bs.modal', function(e) {    		
+			$('#menu_login').click();			
+			$('#input_user').focus();			
 		})
 
 		$('#login_button').click(function(e) {  			
   			$('#menu_login').click();
 			$('#input_user').focus();
 		});
+
+		{% if error == "401" %}			
+			$('#menu_login').click();
+			$('#input_user').focus();		
+    	{% endif %}
     });
 </script>
 
@@ -74,6 +77,7 @@
 		</div>
 	</div>
 </div>
+<!-- Modal Dialog, mensaje de exito al crear usuario -->
 <div class="modal fade" id="success_users" role="dialog">
 	<div class="modal-dialog modal-sm">
 	  	<!-- Modal content-->
