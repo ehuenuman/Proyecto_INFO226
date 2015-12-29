@@ -2,33 +2,19 @@
 {% block content %}
 
 <script>
-    $(document).ready(function() {
-    	var heights = $(".panel-body").map(function() {
-        	return $(this).height();
-    }).get(),
-    	maxHeight = Math.max.apply(null, heights);
-    	$(".panel-body").height(maxHeight);
-    	
-    	{% if error == "201" %}
-			$("#success_users").modal();	
-    	{% else %}
-    		$("#success_users").modal();
-    	{% endif %}
-
-    	$('#success_users').on('hidden.bs.modal', function(e) {  
-			$('#menu_login').click();
-			$('#input_user').focus();	
-		})
-
-		$('#login_button').click(function(e) {  			
-  			$('#menu_login').click();
-			$('#input_user').focus();
-		});
-    });
+        $(document).ready(function() {
+        var heights = $(".panel-body").map(function() {
+            return $(this).height();
+        }).get(),
+     
+        maxHeight = Math.max.apply(null, heights);
+     
+        $(".panel-body").height(maxHeight);
+        });
 </script>
 
 <!-- Jumbotron -->
-<div class="jumbotron">
+<div class="jumbotron jumbotron-degrade">
 	<h1>Generador de Interacciones IMS-QTI</h1>		
 </div>
 <!-- Columnas principales -->
@@ -39,9 +25,9 @@
 				<h3 class="panel-title">Crear Interacción</h3>
 			</div>
 			<div class="panel-body">
-				<a class="btn btn-success btn-block">Seleccion Múltiple</a>
+				<a class="btn btn-success btn-block" href="/selec_multiple">Seleccion Múltiple</a>
 				<a class="btn btn-success btn-block">Términos Pareados</a>
-				<a class="btn btn-success btn-block">Ordenamiento</a>
+				<a class="btn btn-success btn-block" href="/orden">Ordenamiento</a>
 				<a class="btn btn-success btn-block">Completar Frase</a>
 			</div>
 		</div>
@@ -59,7 +45,7 @@
 				</div>	
 				<div class="col-md-6 col-md-offset-3">
 					<a class="btn btn-success btn-block" href="/sign-up">Crear Cuenta</a>
-					<a class="btn btn-success btn-block" id="login_button">Login</a>
+					<a class="btn btn-success btn-block">Login</a>
 				</div>
 			</div>			
 		</div>
@@ -74,21 +60,4 @@
 		</div>
 	</div>
 </div>
-<div class="modal fade" id="success_users" role="dialog">
-	<div class="modal-dialog modal-sm">
-	  	<!-- Modal content-->
-	  	<div class="modal-content">
-		    <div class="modal-header">
-	    	  <button type="button" class="close" data-dismiss="modal">&times;</button>
-	      	<h4 class="modal-title">Usuario creado exitosamente</h4>
-	    	</div>
-	    	<div class="modal-body" align="center">
-	      		<p>Ahora ya puede disfrutar de los beneficios de tener un cuenta. 
-	      			<br>Ingresa con tu usuario y contraseña</p>
-	    	</div>	    	
-	  	</div>  
-	</div>
-</div>
-</div>
-
 {% endblock %}

@@ -1,64 +1,139 @@
 {% extends "layout.html" %}
 
-{% block head %}
-<script type="text/javascript" src="../static/js/sign-up.js"></script>
-{% endblock %}
-
 {% block content %}
+
 <script type="text/javascript">
-	var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+  var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 </script>
 
-<div>
+<script type="text/javascript">
+	$(document).ready(function(){	    
+		$('#nombres').focus();
+		$('#nombres').blur(function(e){
+			if ( $('#nombres').val().trim().length < 3 ) {
+				$('#nombre_mensaje').text("Nombre muy corto");
+				switch_class($("#nombre_mensaje"), $('#nombres'), false)
+			} else {
+				$('#nombre_mensaje').text("");
+				switch_class($("#nombre_mensaje"), $('#nombres'), true)
+			}
+		})
+		$('#email').blur(function(e){
+			if ( $('#email').val().trim().length == 0 ) {
+				$('#email_mensaje').text("Campo obligatorio");
+				switch_class($("#email_mensaje"), $('#email'), false)
+			} else {
+				$('#email_mensaje').text("");
+				switch_class($("#email_mensaje"), $('#email'), true)
+			}
+		})
+        $("#usuario").blur(function(e){
+        	if ( $('#usuario').val().trim().length < 6) {
+        		$("#usuario_mensaje").text("Mínimo 6 caracteres");
+		        switch_class($("#usuario_mensaje"), $('#usuario'), false)
+        	} else {	        
+		        $.getJSON($SCRIPT_ROOT + '/verifica_usuario', {
+		           	usuario : $("#usuario").val()
+		        }, function(data) {
+			        if (data.result == false) {
+			        	$("#usuario_mensaje").text("Usuario no disponible");
+			        	switch_class($("#usuario_mensaje"), $('#usuario'), false)
+			        } else {
+			        	$("#usuario_mensaje").text("Usuario disponible");
+			        	switch_class($("#usuario_mensaje"), $('#usuario'), true)
+			        }
+			    });
+			    return false;
+			}
+		});
+		$('#password').blur(function(e){
+			if ( $('#password').val().trim().length == 0 ) {
+				$('#password_mensaje').text("Campo obligatorio");
+				switch_class($("#password_mensaje"), $('#password'), false)
+			} else {
+				$('#nombre_mensaje').text("");
+				switch_class($("#password_mensaje"), $('#password'), true)
+			}
+		})
+	});
+
+	function comparar_pass() {
+		var pass1 = $('#password').val();
+		if ( $('#password2').val() == pass1 ) {
+			$('#password_mensaje2').text("Contraseñas coinciden");
+			switch_class($("#password_mensaje2"), $('#password2'), true)
+		} else {
+			$('#password_mensaje2').text("Contraseñas no coinciden");
+			switch_class($("#password_mensaje2"), $('#password2'), false)
+		}
+	};
+
+	function switch_class(span_id, input_id, disponible) {
+		if ( disponible ) {
+	    	span_id.removeClass('respuesta-formulario-error');
+	    	span_id.addClass('respuesta-formulario-correcto');	    	
+	    	input_id.removeClass('error-input-formulario');
+			input_id.addClass('correcto-input-formulario');
+	    } else {
+	    	span_id.removeClass('respuesta-formulario-correcto');
+			span_id.addClass('respuesta-formulario-error');
+			input_id.removeClass('correcto-input-formulario');
+	    	input_id.addClass('error-input-formulario');						
+	    }		
+	};
+</script>
+
+<div style="opacity:0.8">
 	<div class="row">
 		<h1 class="col-md-offset-2 col-md-8 well">Registro de Usuario</h1>
 	</div>
 	<div class="row">
 		<div class="col-md-offset-2 col-md-8 well">
-			<form class="form-horizontal" name="sign_up" action="{{ url_for('sign_up') }}" method="POST">
+			<form class="form-horizontal" name="sign-up" action="{{ url_for('sign_up') }}" method="POST">
 				<div class="form-group form-group-lg">
-					<label class="col-md-3 control-label" for="nombres">Nombre Completo: </label>
+					<label class="col-md-3 control-label" for="titulo">Nombre Completo: </label>
 					<div class="col-md-8">
-						<input id="nombres" onblur="valida_nombres()" class="form-control" type="text" name="nombres" placeholder="Nombres y Apellidos">
+						<input id="nombres" class="form-control" type="text" name="nombres" placeholder="Nombres Apellidos">
 					</div>
 					<span class="col-md-offset-3 col-md-8" id="nombre_mensaje"></span>
 				</div>
 				<div class="form-group form-group-lg">
-					<label class="col-md-3 control-label" for="email">email: </label>
+					<label class="col-md-3 control-label" for="titulo">email: </label>
 					<div class="col-md-8">
-						<input id="email" onblur="valida_email()" class="form-control" type="text" name="email" placeholder="micorreo@email.com">
+						<input id="email" class="form-control" type="text" name="email" placeholder="micorreo@email.com">
 					</div>
 					<span class="col-md-offset-3 col-md-8" id="email_mensaje"></span>
 				</div>
 				<div class="form-group form-group-lg">
-					<label class="col-md-3 control-label" for="usuario">Usuario: </label>
+					<label class="col-md-3 control-label" for="titulo">Usuario: </label>
 					<div class="col-md-8">
-						<input class="form-control" onblur="valida_usuario()" type="text" id="usuario" name="usuario" placeholder="Usuario con el que se identificara en el sistema">
+						<input class="form-control" type="text" id="usuario" name="usuario" placeholder="Usuario con el que se identificara en el sistema">
 					</div>
 					<span class="col-md-offset-3 col-md-8" id="usuario_mensaje"></span>
 				</div>
 				<div class="form-group form-group-lg">
-					<label class="col-md-3 control-label" for="password">Contraseña: </label>
+					<label class="col-md-3 control-label" for="titulo">Contraseña: </label>
 					<div class="col-md-8">
-						<input id="password" onblur="valida_pass()" class="form-control" type="password" name="password" placeholder="Contraseña que usara para ingresar a su cuenta">
+						<input id="password" class="form-control" type="password" name="password" placeholder="Contraseña que usara para ingresar a su cuenta">
 					</div>
 					<span class="col-md-offset-3 col-md-8" id="password_mensaje"></span>
 				</div>
 				<div class="form-group form-group-lg">
-					<label class="col-md-3 control-label" for="password2">Repetir contraseña: </label>
+					<label class="col-md-3 control-label" for="titulo">Repetir contraseña: </label>
 					<div class="col-md-8">
 						<input id="password2" class="form-control" type="password" onkeyup="comparar_pass()" name="password2" placeholder="Reingrese la misma contraseña anterior">
 					</div>
 					<span class="col-md-offset-3 col-md-8" id="password_mensaje2"></span>
 				</div>					
 				<div class="form-group form-group-lg">						
-					<button type="button" class="btn btn-success btn-lg col-md-offset-5 col-md-2" onclick="validar_datos()">Registrarse</button>
-					<div class="col-md-10 col-md-offset-3">			
-						<span id="submit_mensaje" class="form-control-static respuesta-formulario-error"></span>	
-						{% if error == "201" %}
+					<button type="submit" class="btn btn-default btn-lg col-md-offset-5 col-md-2">Registrarse</button>
+					<div class="col-md-3 col-md-offset-1">
+						{% if error == "200" %}
 							<p class="form-control-static" style="color:green">Entrada ingresada</p>
-						{% endif %}
-					</div>					
+						{% elif error == "401" %}
+							<p class="form-control-static" style="color:red">Entrada duplicada</p>
+						{% endif %}								
+					</div>
 				</div>
 			</form>
 		</div>

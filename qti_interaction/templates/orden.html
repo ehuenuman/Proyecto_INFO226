@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#num").change(function(){
+			$("#enunciados").empty();
+			var alt = $("#num").val();
+			for (var i = 1; i <= alt; i++) {
+				$("<div class='col-md-offset-2 col-md-2' align='right'><input id='"+i+"'' type='number' class='form-control'></div><div class='col-md-7'><input id='"+i+"'' type='text' class='form-control' placeholder='texto'></div>").appendTo("#enunciados");	
+			};
+		})
+	});
+</script>
+<div>
+	<div class="row">
+		<h1 class="col-md-offset-2 col-md-8 well">Ordenamiento</h1>
+	</div>
+	<div class="row">
+		<div class="col-md-offset-2 col-md-8 well">
+			<form class="form-horizontal" name="pregunta" action="">
+				<div class="form-group form-group-lg">
+					<label class="col-md-3 control-label">Título de la pregunta</label>
+					<div class="col-md-8">
+						<textarea class="form-control" name"pregunta" style="resize:none;"></textarea>
+					</div>
+				</div>
+				<div class="form-group form-group-lg">
+					<label class="col-md-3 control-label" for="n_alter">
+						N° de enunciados: 
+					</label>
+					<div class="col-md-8">
+						<input id="num" type="number" step="1" class="form-control">
+					</div>
+				</div>
+				<div class="form-group form-group-lg" align="center"><label class="control-label">Ingrese enunciados y su posición correcta:</label></div>
+				<div id="enunciados" class="form-group form-group-lg">
+				</div>
+				<div class="form-group form-group-lg" align="center">
+					<a class="btn btn-success">Crear</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

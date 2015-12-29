@@ -9,7 +9,6 @@
     <!-- <link rel="stylesheet" type="text/css" href="bootstrap/css/docs.min.css"> -->  
     <script type="text/javascript" src="../static/js/jquery-2.1.4.js"></script> 
     <script type="text/javascript" src="../static/js/bootstrap.js"></script>
-    {% block head %}{% endblock %}
     
 </head>
 <body>
@@ -31,7 +30,7 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
-                            <a href="#" id="menu_login" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">                        
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">                        
                                 {% if user %}
                                     <b>Hola, {{user}}</b>
                                 {% else %}
@@ -42,10 +41,10 @@
                                 <li>
                                     <form class="navbar-form navbar-left">
                                         <div>
-                                            <input id="input_user" type="text" class="form-control" placeholder="Usuario">
-                                            <input type="password" class="form-control form-group" placeholder="Constraseña" style="margin-top:10px; margin-bottom:10px;">
+                                            <input type="text" class="form-control" placeholder="Usuario">
+                                            <input type="password" class="form-control  form-group" placeholder="Constraseña" style="margin-top:10px; margin-bottom:10px;">
                                             <a class="btn btn-success btn-xs btn-block">Login</a>
-                                            <a href="/sign-up" class="btn btn-success btn-xs btn-block">Registrarse</a>
+                                            <a class="btn btn-success btn-xs btn-block">Sign up</a>
                                         </div>
                                     </form>
                                 </li>
