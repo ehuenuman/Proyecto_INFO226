@@ -8,6 +8,10 @@ body {
 	padding-bottom: 50px; 
 }
 
+.panel-body {
+  overflow-y: auto;
+}
+
 .footer {
 	position: absolute;
   bottom: 0;
@@ -20,6 +24,17 @@ body {
 .container .text-muted {
   margin: 15px 0;
   font-weight: bold;
+}
+
+.container-preguntas {
+  background-color: orange;
+  padding: 5px 0px 5px 0px;
+  margin-bottom: 5px;
+  border-radius: 4px;
+}
+
+.container-preguntas > div {
+  padding-right: 0px
 }
 
 .respuesta-formulario-error {

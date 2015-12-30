@@ -35,7 +35,6 @@ def index():
         return render_template("main_window.html", error="401")
 
     else:  # GET Method
-
         return render_template("main_window.html")
 
 
@@ -66,6 +65,13 @@ def verifica_email():
     email = request.args.get('email')
     respuesta = model.verifica_email(email)
     return jsonify(result=respuesta)
+
+
+@app.route('/get_preguntas')
+def get_preguntas():
+    id_user = request.args.get('id_usuario')
+    preguntas = model.get_preguntas(id_user)
+    return jsonify(preguntas=preguntas)
 
 
 @app.route('/logout')

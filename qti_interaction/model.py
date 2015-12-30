@@ -8,7 +8,7 @@ DB_PASS = ''
 
 def conectar():
     """Crea la conexión a la base de datos"""
-    conn = MySQLdb.connect(DB_HOST, DB_USER, DB_PASS)
+    conn = MySQLdb.connect(DB_HOST, DB_USER, DB_PASS, charset='utf8')
     cursor = conn.cursor()
     cursor.execute('use qti_interaction;')
     return conn
@@ -78,7 +78,8 @@ def get_name_user(email):
     """
     conn = conectar()
     cursor = conn.cursor()
-    sql = 'SELECT nombre_completo FROM usuario WHERE email = "{}"'.format(email)
+    sql = 'SELECT nombre_completo FROM usuario WHERE email = "{}"'.format(
+        email)
     cursor.execute(sql)
     data = cursor.fetchall()
     cursor.close()
@@ -99,3 +100,36 @@ def get_id_user(email):
     id_usuario = cursor.fetchall()
     cursor.close()
     return id_usuario[0][0]
+
+
+def get_preguntas(id_user=None):
+    """
+    Obtiene las ultimas tres preguntas añadidas por un usuario en especifico.
+    """
+    conn = conectar()
+    cursor = conn.cursor()
+    if id_user != None:
+        sql = 'SELECT id, enunciado, tipo, fecha FROM pregunta '
+        sql += 'WHERE usuario_id={} '.format(id_user)
+        sql += 'order by id DESC LIMIT 3'
+        cursor.execute(sql)
+        respuesta = cursor.fetchall()        
+        cursor.close()
+        preguntas = {"pregunta": []}        
+        for i in range(0,len(respuesta)):
+            preguntas["pregunta"].append({"id": respuesta[i][0], "enunciado": respuesta[i][1], "tipo": respuesta[i][2], "fecha": str(respuesta[i][3])})       
+    else:
+        sql = 'SELECT pr.id, pr.enunciado, pr.tipo, pr.fecha, us.nombre_completo'
+        sql += ' FROM pregunta pr, usuario us'
+        sql += ' WHERE pr.usuario_id = us.id order by pr.id DESC LIMIT 4'
+        cursor.execute(sql)
+        respuesta = cursor.fetchall()
+        cursor.close()
+        preguntas = {"pregunta": []}        
+        for i in range(0,len(respuesta)):
+            preguntas["pregunta"].append({"id": respuesta[i][0], "enunciado": respuesta[i][1], "tipo": respuesta[i][2], "fecha": str(respuesta[i][3]), "autor": respuesta[i][4]})
+
+    return preguntas["pregunta"]
+
+if __name__ == "__main__":
+    get_preguntas()
