@@ -19,13 +19,17 @@ def index():
 def sign_up():
     return render_template('sign-up.html')
 
-@app.route("/selec_multiple", methods=['GET', 'POST'])
-def selec_multiple():
+@app.route("/seleccion-multiple", methods=['GET', 'POST'])
+def seleccion_multiple():
     return render_template('selec_multiple.html')
 
-@app.route("/orden", methods=['GET', 'POST'])
-def orden():
+@app.route("/ordenamiento", methods=['GET', 'POST'])
+def ordenamiento():
     return render_template('orden.html')
+
+@app.route("/terminos-pareados", methods=['GET', 'POST'])
+def terminos_pareados():
+    return render_template('pareados.html')
 
 @app.route('/verifica_usuario')
 def verifica_usuario():
