@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<script type="text/javascript">
+	$(document).ready(function(){
+		var submit = "";
+		$("#num").change(function(){
+			$("#enunciados").empty();
+			var enun = $("#num").val();
+			if (enun < 3 || enun >5){
+				alert("El numero de enunciados debe estar entre 3 y 5.");
+				$("#submit").attr("class","btn btn-success disabled");
+			}
+			else{
+				$("#submit").attr("class","btn btn-success");
+				for (var i = 1; i <= enun; i++) {
+				var rows = "<div class='col-md-offset-2 col-md-2' align='right'><input id='pos_"+i+"' type='number' class='form-control' required></div><div class='col-md-7'><input id='enun_"+i+"' type='text' class='form-control' placeholder='texto' required></div>";
+				$(rows).appendTo("#enunciados");	
+				};
+			}
+		})
+	});
+</script>
+<div>
+	<div class="row">
+		<h1 class="col-md-offset-2 col-md-8 well">Ordenamiento</h1>
+	</div>
+	<div class="row">
+		<div class="col-md-offset-2 col-md-8 well">
+			<form class="form-horizontal" name="pregunta" action="">
+				<div class="form-group form-group-lg">
+					<label class="col-md-3 control-label" for="t_pregunta">Título de la pregunta:</label>
+					<div class="col-md-8">
+						<textarea class="form-control" name"t_pregunta" style="resize:none;" required></textarea>
+					</div>
+				</div>
+				<div class="form-group form-group-lg">
+					<label class="col-md-3 control-label" for="d_pregunta">Descripción de la pregunta:</label>
+					<div class="col-md-8">
+						<textarea class="form-control" name"d_pregunta" style="resize:none;" required></textarea>
+					</div>
+				</div>
+				<div class="form-group form-group-lg">
+					<label class="col-md-3 control-label" for="n_enun">
+						N° de enunciados: 
+					</label>
+					<div class="col-md-8">
+						<input id="num" name="n_enun" type="number" step="1" class="form-control">
+					</div>
+				</div>
+				<div class="form-group form-group-lg">
+					<label class="col-md-3 control-label" for="a_imagen">Imagen de apoyo:</label>
+					<div class="col-md-8 control-label"><input type="file" name="a_imagen"></div>
+				</div>
+				<div class="form-group form-group-lg" align="center"><label class="control-label">Ingrese enunciados y su posición correcta:</label></div>
+				<div id="enunciados" class="form-group form-group-lg">
+				</div>
+				<div class='form-group form-group-lg' align='center'><a id='submit' type="Submit" class='btn btn-success disabled'>Crear</a></div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

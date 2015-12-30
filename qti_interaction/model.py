@@ -113,11 +113,12 @@ def get_preguntas(id_user=None):
         sql += 'WHERE usuario_id={} '.format(id_user)
         sql += 'order by id DESC LIMIT 3'
         cursor.execute(sql)
-        respuesta = cursor.fetchall()        
+        respuesta = cursor.fetchall()
         cursor.close()
-        preguntas = {"pregunta": []}        
-        for i in range(0,len(respuesta)):
-            preguntas["pregunta"].append({"id": respuesta[i][0], "enunciado": respuesta[i][1], "tipo": respuesta[i][2], "fecha": str(respuesta[i][3])})       
+        preguntas = {"pregunta": []}
+        for i in range(0, len(respuesta)):
+            preguntas["pregunta"].append({"id": respuesta[i][0], "enunciado": respuesta[i][
+                                         1], "tipo": respuesta[i][2], "fecha": str(respuesta[i][3])})
     else:
         sql = 'SELECT pr.id, pr.enunciado, pr.tipo, pr.fecha, us.nombre_completo'
         sql += ' FROM pregunta pr, usuario us'
@@ -125,9 +126,10 @@ def get_preguntas(id_user=None):
         cursor.execute(sql)
         respuesta = cursor.fetchall()
         cursor.close()
-        preguntas = {"pregunta": []}        
-        for i in range(0,len(respuesta)):
-            preguntas["pregunta"].append({"id": respuesta[i][0], "enunciado": respuesta[i][1], "tipo": respuesta[i][2], "fecha": str(respuesta[i][3]), "autor": respuesta[i][4]})
+        preguntas = {"pregunta": []}
+        for i in range(0, len(respuesta)):
+            preguntas["pregunta"].append({"id": respuesta[i][0], "enunciado": respuesta[i][
+                                         1], "tipo": respuesta[i][2], "fecha": str(respuesta[i][3]), "autor": respuesta[i][4]})
 
     return preguntas["pregunta"]
 

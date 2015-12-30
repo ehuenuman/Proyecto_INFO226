@@ -14,10 +14,10 @@ import model
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
-    print("Index")    
+    print("Index")
     sumSessionCounter()
-    if request.method == 'POST': 
-        print("POST")       
+    if request.method == 'POST':
+        print("POST")
         email = (request.form["email_login"]).encode('utf-8')
         password = (request.form["pass_login"]).encode('utf-8')
         print(email)
@@ -78,6 +78,43 @@ def get_preguntas():
 def logout():
     session.clear()
     return redirect(url_for('index'))
+
+
+@app.route('/seleccion-multiple/', methods=['GET', 'POST'])
+def seleccion_multiple():
+    print("alternativas")
+    if request.method == "POST":
+        print("POST")
+        #titulo = (request.form["t_pregunta"])
+        print("POST")
+        #descripcion = (request.form["d_pregunta"]).encode('utf-8')
+        print("POST")
+        n_alter = (request.form["n_alter"]).encode('utf-8')
+        print(n_alter)
+        print("POST")
+        alternativas = {'alternativas': []}
+        for i in range(0, int(n_alter)):
+            alternativas['alternativas'].append([(request.form["alter_" + str(i) + ""]).encode('utf-8'),
+                                                 (request.form["checkbox_" + str(i) + ""]).encode('utf-8')])
+        print(alternativas)
+        return redirect(url_for('index'))
+    else:
+        return render_template('selec_multiple.html')
+
+
+@app.route("/ordenamiento/", methods=['GET', 'POST'])
+def ordenamiento():
+    return render_template('orden.html')
+
+
+@app.route("/terminos-pareados/", methods=['GET', 'POST'])
+def terminos_pareados():
+    return render_template('pareados.html')
+
+
+@app.route("/completar-frase/", methods=['GET', 'POST'])
+def completar_frase():
+    return render_template('completar.html')
 
 
 def sumSessionCounter():

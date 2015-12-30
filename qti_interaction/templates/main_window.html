@@ -34,7 +34,7 @@
         }, function(data) {        	
         	var row = "";
         	for (var i = 0; i < data.preguntas.length; i++) {        	
-        		row += "<div id='"+data.preguntas[i].id+"' class='col-md-12 container-preguntas'>";
+        		row += "<div id='"+data.preguntas[i].id+"' class='col-md-12 container-preguntas' >";
 					row += "<div class='col-md-12'><b>Título</b>: "+data.preguntas[i].enunciado+"</div>";
 					row += "<div class='col-md-6'><b>Tipo</b>: "+data.preguntas[i].tipo+"</div>";
 					row += "<div class='col-md-6'><b>Fecha</b>: "+data.preguntas[i].fecha+"</div>";
@@ -63,11 +63,11 @@
     function show_login() {    	
     	$('#menu_login').click();
 		$('#input_user').focus();
-    };    
+    };
 </script>
 
 <!-- Jumbotron -->
-<div class="jumbotron">
+<div class="jumbotron jumbotron-degrade">
 	<h1>Generador de Interacciones IMS-QTI</h1>		
 </div>
 <!-- Columnas principales -->
@@ -78,10 +78,10 @@
 				<h3 class="panel-title">Crear Interacción</h3>
 			</div>
 			<div class="panel-body">
-				<a class="btn btn-success btn-block">Seleccion Múltiple</a>
-				<a class="btn btn-success btn-block">Términos Pareados</a>
-				<a class="btn btn-success btn-block">Ordenamiento</a>
-				<a class="btn btn-success btn-block">Completar Frase</a>
+				<a class="btn btn-success btn-block" href="{{url_for('seleccion_multiple')}}">Seleccion Múltiple</a>
+				<a class="btn btn-success btn-block" href="/terminos-pareados">Términos Pareados</a>
+				<a class="btn btn-success btn-block" href="/ordenamiento">Ordenamiento</a>
+				<a class="btn btn-success btn-block" href="/completar-frase">Completar Frase</a>
 			</div>
 		</div>
 	</div>
@@ -90,7 +90,6 @@
 			<div class="panel-heading">			
 				<h3 class="panel-title">Tus Preguntas</h3>
 			</div>
-
 			{% if session['user'] %}
 				<div id="mis_preguntas" class="panel-body">
 				</div>
@@ -119,6 +118,7 @@
 		</div>
 	</div>
 </div>
+
 <!-- Modal Dialog, mensaje de exito al crear usuario -->
 <div class="modal fade" id="success_users" role="dialog">
 	<div class="modal-dialog modal-sm">
