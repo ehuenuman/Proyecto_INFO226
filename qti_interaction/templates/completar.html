@@ -5,25 +5,26 @@
 	$(document).ready(function(){
 		var submit = "";
 		$("#num").change(function(){
-			$("#enunciados").empty();
-			var enun = $("#num").val();
-			if (enun < 3 || enun >5){
-				alert("El numero de enunciados debe estar entre 3 y 5.");
+			$("#palabras").empty();
+			var pal = $("#num").val();
+			if (pal < 3 || pal >10){
+				alert("El numero de palabras debe estar entre 3 y 10.");
 				$("#submit").attr("class","btn btn-success disabled");
 			}
 			else{
 				$("#submit").attr("class","btn btn-success");
-				for (var i = 1; i <= enun; i++) {
-				var rows = "<div class='col-md-offset-2 col-md-2' align='right'><input id='pos_"+i+"' type='number' class='form-control' required></div><div class='col-md-7'><input id='enun_"+i+"' type='text' class='form-control' placeholder='texto' required></div>";
-				$(rows).appendTo("#enunciados");	
+				for (var i = 1; i <= pal; i++) {
+				var rows = "<div class='col-md-offset-2 col-md-8'><input id='palabra_"+i+"' type='text' class='form-control' placeholder='texto' required></div>";
+				$(rows).appendTo("#palabras");	
 				};
 			}
 		})
 	});
 </script>
+
 <div>
 	<div class="row">
-		<h1 class="col-md-offset-2 col-md-8 well">Ordenamiento</h1>
+		<h1 class="col-md-offset-2 col-md-8 well">Completar Frase</h1>
 	</div>
 	<div class="row">
 		<div class="col-md-offset-2 col-md-8 well">
@@ -41,23 +42,24 @@
 					</div>
 				</div>
 				<div class="form-group form-group-lg">
-					<label class="col-md-3 control-label" for="n_enun">
-						N° de enunciados: 
+					<label class="col-md-3 control-label" for="n_pal">
+						N° de palabras: 
 					</label>
 					<div class="col-md-8">
-						<input id="num" name="n_enun" type="number" step="1" class="form-control">
+						<input id="num" name="n_pal" type="number" step="1" class="form-control">
 					</div>
 				</div>
 				<div class="form-group form-group-lg">
 					<label class="col-md-3 control-label" for="a_imagen">Imagen de apoyo:</label>
 					<div class="col-md-8 control-label"><input type="file" name="a_imagen"></div>
 				</div>
-				<div class="form-group form-group-lg" align="center"><label class="control-label">Ingrese enunciados y su posición correcta:</label></div>
-				<div id="enunciados" class="form-group form-group-lg">
+				<div class="form-group form-group-lg" align="center"><label class="control-label">Ingrese las palabras en el orden correcto:</label></div>
+				<div id="palabras" class="form-group form-group-lg">
 				</div>
 				<div class='form-group form-group-lg' align='center'><a id='submit' type="Submit" class='btn btn-success disabled'>Crear</a></div>
 			</form>
 		</div>
 	</div>
 </div>
+
 {% endblock %}

@@ -6,15 +6,15 @@
 		var submit = "";
 		$("#num").change(function(){
 			$("#pares").empty();
-			var alt = $("#num").val();
-			if (alt < 3 || alt >5){
+			var pares = $("#num").val();
+			if (pares < 3 || pares >5){
 				alert("El numero de pares debe estar entre 3 y 5.");
 				$("#submit").attr("class","btn btn-success disabled");
 			}
 			else{
 				$("#submit").attr("class","btn btn-success");
-				for (var i = 1; i <= alt; i++) {
-				var rows = "<div><div class='col-md-offset-1 col-md-2'><input class='form-control' id='1dorden"+i+"' type='text' placeholder='texto'></div><div class='col-md-2'><input class='form-control' id='2dorden"+i+"' type=text placeholder='texto'></div><div class='col-md-offset-2 col-md-2'><input class='form-control' id='1orden"+i+"' type='text' placeholder='texto'></div><div class='col-md-2'><input class='form-control' id='2orden"+i+"' type='text' placeholder='texto'></div></div>";
+				for (var i = 1; i <= pares; i++) {
+				var rows = "<div><div class='col-md-offset-1 col-md-2'><input class='form-control' id='1dorden"+i+"' type='text' placeholder='texto' required></div><div class='col-md-2'><input class='form-control' id='2dorden"+i+"' type=text placeholder='texto' required></div><div class='col-md-offset-2 col-md-2'><input class='form-control' id='1orden"+i+"' type='text' placeholder='texto' required></div><div class='col-md-2'><input class='form-control' id='2orden"+i+"' type='text' placeholder='texto' required></div></div>";
 				$(rows).appendTo("#pares");	
 				};
 			}
@@ -24,7 +24,7 @@
 	
 <div>
 	<div class="row">
-		<h1 class="col-md-offset-2 col-md-8 well">Selección multiple</h1>
+		<h1 class="col-md-offset-2 col-md-8 well">Terminos Pareados</h1>
 	</div>
 	<div class="row">
 		<div class="col-md-offset-2 col-md-8 well">
@@ -32,26 +32,26 @@
 				<div class="form-group form-group-lg">
 					<label class="col-md-3 control-label" for="t_pregunta">Título de la pregunta:</label>
 					<div class="col-md-8">
-						<textarea class="form-control" name"t_pregunta" style="resize:none;" required=""></textarea>
+						<textarea class="form-control" name"t_pregunta" style="resize:none;" required></textarea>
 					</div>
 				</div>
 				<div class="form-group form-group-lg">
 					<label class="col-md-3 control-label" for="d_pregunta">Descripción de la pregunta:</label>
 					<div class="col-md-8">
-						<textarea class="form-control" name"d_pregunta" style="resize:none;" required=""></textarea>
+						<textarea class="form-control" name"d_pregunta" style="resize:none;" required></textarea>
 					</div>
 				</div>
 				<div class="form-group form-group-lg">
-					<label class="col-md-3 control-label" for="n_alter">
+					<label class="col-md-3 control-label" for="n_pares">
 						N° de pares: 
 					</label>
 					<div class="col-md-8">
-						<input id="num" type="number" step="1" class="form-control">
+						<input name="n_pares" id="num" type="number" step="1" class="form-control">
 					</div>
 				</div>
 				<div class="form-group form-group-lg">
 					<label class="col-md-3 control-label" for="a_imagen">Imagen de apoyo:</label>
-					<div class="col-md-8 control-label"><input type="file"></div>
+					<div class="col-md-8 control-label"><input name="a_imagen" type="file"></div>
 				</div>
 				<div class="form-group form-group-lg">
 					<div class="col-md-offset-1 col-md-4" align="center"><label class="control-label">Pares desordenados:</label></div>
@@ -59,7 +59,7 @@
 				</div>
 				<div id="pares" class="form-group form-group-lg">
 				</div>
-				<div class='form-group form-group-lg' align='center'><a id='submit' class='btn btn-success disabled'>Crear</a></div>
+				<div class='form-group form-group-lg' align='center'><a id='submit' type="Submit" class='btn btn-success disabled'>Crear</a></div>
 			</form>
 		</div>
 	</div>
