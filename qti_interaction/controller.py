@@ -27,6 +27,7 @@ def index():
                 print ("Password Correcta")
                 session['user'] = usuario
                 session['id_user'] = model.get_id_user(usuario)
+
                 # return render_template("main_window.html", user=usuario)
                 return redirect(url_for('index'))
 
@@ -73,6 +74,12 @@ def verifica_email():
     email = request.args.get('email')
     respuesta = model.verifica_email(email)
     return jsonify(result=respuesta)
+
+@app.route('/get_preguntas')
+def get_preguntas():
+    id_user = request.args.get('id_usuario')
+    preguntas = model.get_preguntas(id_user)
+    return jsonify(preguntas=preguntas)
 
 @app.route('/logout')
 def logout():
