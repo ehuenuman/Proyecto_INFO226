@@ -16,16 +16,16 @@
 			$("#success_users").modal();			
     	{% endif %}
 
-    	$('#success_users').on('hidden.bs.modal', function(e) {    		
-			show_login()		
+    	$('#success_users').on('hidden.bs.modal', function(e) {
+			show_login()
 		})
 
-		$('#login_button').click(function(e) {			
+		$('#login_button').click(function(e) {  			
   			show_login()
 		});
 
-		{% if error == "401" %}
-			show_login()		
+		{% if error == "401" %}			
+			show_login()
     	{% endif %}
 
     	{% if session['id_user'] %}    	
@@ -33,7 +33,7 @@
            	id_usuario : {{session['id_user']}}
         }, function(data) {        	
         	var row = "";
-        	for (var i = 0; i < 3; i++) {        	
+        	for (var i = 0; i < data.preguntas.length; i++) {        	
         		row += "<div id='"+data.preguntas[i].id+"' class='col-md-12 container-preguntas'>";
 					row += "<div class='col-md-12'><b>Título</b>: "+data.preguntas[i].enunciado+"</div>";
 					row += "<div class='col-md-6'><b>Tipo</b>: "+data.preguntas[i].tipo+"</div>";
@@ -48,7 +48,7 @@
 	    $.getJSON($SCRIPT_ROOT + "{{ url_for('get_preguntas') }}", {           	
         }, function(data) {
         	var row = "";
-        	for (var i = 0; i < 4; i++) {        	
+        	for (var i = 0; i < data.preguntas.length; i++) {        	
         		row += "<div id='"+data.preguntas[i].id+"' class='col-md-12 container-preguntas'>";
 					row += "<div class='col-md-12'><b>Título</b>: "+data.preguntas[i].enunciado+"</div>";
 					row += "<div class='col-md-6'><b>Tipo</b>: "+data.preguntas[i].tipo+"</div>";
@@ -90,8 +90,9 @@
 			<div class="panel-heading">			
 				<h3 class="panel-title">Tus Preguntas</h3>
 			</div>
+
 			{% if session['user'] %}
-				<div id="mis_preguntas" class="panel-body">	
+				<div id="mis_preguntas" class="panel-body">
 				</div>
 			{% else %}
 				<div class="panel-body">
@@ -129,11 +130,10 @@
 	    	</div>
 	    	<div class="modal-body" align="center">
 	      		<p>Ahora ya puede disfrutar de los beneficios de tener un cuenta. 
-	      			<br>Ingresa con tu usuario y contraseña</p>
+	      			<br>Ingresa con tu email y contraseña</p>
 	    	</div>	    	
 	  	</div>  
 	</div>
-</div>
 </div>
 
 {% endblock %}

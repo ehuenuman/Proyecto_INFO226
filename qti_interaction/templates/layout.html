@@ -31,14 +31,14 @@
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
               <a id="menu_login" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">  
-                {% if session['user'] %}
-                  <b>Hola, {{session['user']}}</b>
+                {% if session['name'] %}
+                  <b>Hola, {{session['name']}}</b>
                 {% else %}
                   <b>Hola, Invitado</b>
                 {% endif %}
               </a>
               <ul class="dropdown-menu">                
-                {% if session['user'] %}
+                {% if session['name'] %}
                   <li><a href="#">Editar Perfil</a></li>                
                   <li role="separator" class="divider"></li>
                   <li><a href="{{ url_for('logout') }}">Desconectarse</a></li>
@@ -46,10 +46,10 @@
                   <li>
                     <form class="navbar-form navbar-left" action="{{ url_for('index') }}" name="login" method="POST">
                       <div>
-                        <input id="input_user" name="user_login" type="text" class="form-control" placeholder="Usuario">
-                        <input name="pass_login" type="password" class="form-control form-group" placeholder="Constraseña" style="margin-top:10px; margin-bottom:10px;">
+                        <input id="email_login" name="email_login" type="text" class="form-control" placeholder="Email">
+                        <input name="pass_login" type="password" class="form-control form-group" placeholder="Contraseña" style="margin-top:10px; margin-bottom:10px;">
                         <button type="submit" class="btn btn-success btn-xs btn-block">Login</button>
-                        <a href="/sign-up" class="btn btn-success btn-xs btn-block">Registrarse</a>                      
+                        <a href="{{ url_for('sign_up') }}" class="btn btn-success btn-xs btn-block">Registrarse</a>
                       </div>
                       <div class="respuesta-formulario-error" align="center">
                         {% if error == "401" %}

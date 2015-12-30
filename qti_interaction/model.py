@@ -14,23 +14,6 @@ def conectar():
     return conn
 
 
-def verifica_usuario(usuario):
-    """
-    Realiza la consulta por un usuario en especifico.
-    Retorna True si el usuario esta disponible para ser usado.
-    """
-    conn = conectar()
-    cursor = conn.cursor()
-    sql = 'SELECT * FROM usuario WHERE user = "{}"'.format(usuario)
-    cursor.execute(sql)
-    if len(cursor.fetchall()) > 0:
-        cursor.close()
-        return False
-    else:
-        cursor.close()
-        return True
-
-
 def verifica_email(email):
     """
     Realiza la consulta por un correo en especifico.
@@ -48,7 +31,7 @@ def verifica_email(email):
         return True
 
 
-def registrar_usuario(nombres, email, usuario, password):
+def registrar_usuario(nombres, email, password):
     """
     Ingresa un nuevo usuario a la base de datos.
     Retorna True si la operación se realizo con exito.
@@ -56,12 +39,11 @@ def registrar_usuario(nombres, email, usuario, password):
     conn = conectar()
     cursor = conn.cursor()
 
-    sql = 'INSERT INTO usuario(nombre_completo, email, user, password) '
-    sql += 'VALUES ("{}","{}","{}","{}")'.format((nombres),
-                                                 (email),
-                                                 (usuario),
-                                                 (password)
-                                                 )
+    sql = 'INSERT INTO usuario(nombre_completo, email, password) '
+    sql += 'VALUES ("{}","{}","{}")'.format((nombres),
+                                            (email),
+                                            (password)
+                                            )
     try:
         cursor.execute(sql)
         conn.commit()
@@ -73,31 +55,47 @@ def registrar_usuario(nombres, email, usuario, password):
         return False
 
 
-def get_email_pass(usuario):
+def get_pass(email):
     """
     Obtiene el email y el pass de un usuario en especifico.
-    Se asume que el usuario existe en la base de datos, es por ello que
-    primero se debe de validar el usuario con el metodo verifica_usuario.
+    Se asume que el usuario existe en la base de datos, es por ello que 
+    primero se debe de validar el email con el metodo verifica_email.
     """
     conn = conectar()
     cursor = conn.cursor()
-    sql = 'SELECT email, password FROM usuario WHERE user = "{}"'.format(
-        usuario)
+    sql = 'SELECT password FROM usuario WHERE email = "{}"'.format(email)
     cursor.execute(sql)
     data = cursor.fetchall()
     cursor.close()
-    return data
+    return data[0][0]
 
 
-def get_id_user(usuario):
+def get_name_user(email):
     """
-    Obtiene el registro id de un usuario especifico.
-    Se asume que el usuario existe en la base de datos, es por ello que primero
-    se debe de validar el usuario con el metodo verifica_usuario.
+    Obtiene el primer nombre de un usuario en especifico a traves de su email.
+    Se asume que el usuario ya existe en la base de datos, es por ello que
+    primero se debe de validar el email con el metodo verifica_email.
     """
     conn = conectar()
     cursor = conn.cursor()
-    sql = 'SELECT id FROM usuario WHERE user = "{}"'.format(usuario)
+    sql = 'SELECT nombre_completo FROM usuario WHERE email = "{}"'.format(
+        email)
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    cursor.close()
+    nombre = data[0][0].split()[0]
+    return nombre
+
+
+def get_id_user(email):
+    """
+    Obtiene el registro id de un usuario especifico.
+    Se asume que el usuario existe en la base de datos, es por ello que primero
+    se debe de validar el email con el metodo verifica_email.
+    """
+    conn = conectar()
+    cursor = conn.cursor()
+    sql = 'SELECT id FROM usuario WHERE email = "{}"'.format(email)
     cursor.execute(sql)
     id_usuario = cursor.fetchall()
     cursor.close()
@@ -115,10 +113,10 @@ def get_preguntas(id_user=None):
         sql += 'WHERE usuario_id={} '.format(id_user)
         sql += 'order by id DESC LIMIT 3'
         cursor.execute(sql)
-        respuesta = cursor.fetchall()
+        respuesta = cursor.fetchall()        
         cursor.close()
         preguntas = {"pregunta": []}        
-        for i in range(0,3):
+        for i in range(0,len(respuesta)):
             preguntas["pregunta"].append({"id": respuesta[i][0], "enunciado": respuesta[i][1], "tipo": respuesta[i][2], "fecha": str(respuesta[i][3])})       
     else:
         sql = 'SELECT pr.id, pr.enunciado, pr.tipo, pr.fecha, us.nombre_completo'
@@ -128,10 +126,9 @@ def get_preguntas(id_user=None):
         respuesta = cursor.fetchall()
         cursor.close()
         preguntas = {"pregunta": []}        
-        for i in range(0,4):
+        for i in range(0,len(respuesta)):
             preguntas["pregunta"].append({"id": respuesta[i][0], "enunciado": respuesta[i][1], "tipo": respuesta[i][2], "fecha": str(respuesta[i][3]), "autor": respuesta[i][4]})
 
-    print(preguntas["pregunta"])
     return preguntas["pregunta"]
 
 if __name__ == "__main__":
