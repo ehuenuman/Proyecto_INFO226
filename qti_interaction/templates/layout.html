@@ -1,68 +1,79 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Creador de Interacciones IMS-QTI</title>
-    <meta charset = "utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/main.css">
-    <!-- <link rel="stylesheet" type="text/css" href="bootstrap/css/docs.min.css"> -->  
-    <script type="text/javascript" src="../static/js/jquery-2.1.4.js"></script> 
-    <script type="text/javascript" src="../static/js/bootstrap.js"></script>
-    
+  <title>Creador de Interacciones IMS-QTI</title>
+  <meta charset = "utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="../static/css/main.css">
+  <!-- <link rel="stylesheet" type="text/css" href="bootstrap/css/docs.min.css"> -->  
+  <script type="text/javascript" src="../static/js/jquery-2.1.4.js"></script> 
+  <script type="text/javascript" src="../static/js/bootstrap.js"></script>
+  {% block head %}{% endblock %}  
 </head>
 <body>
-    <header>
-        <!-- navbar superior -->
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container-fluid">       
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>              
-                    </button>           
-                    <a class="navbar-brand" href="/" alt="Home">       
-                        <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                    </a>            
-                </div>
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">                        
-                                {% if user %}
-                                    <b>Hola, {{user}}</b>
-                                {% else %}
-                                    <b>Hola, Invitado</b>
-                                {% endif %}
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <form class="navbar-form navbar-left">
-                                        <div>
-                                            <input type="text" class="form-control" placeholder="Usuario">
-                                            <input type="password" class="form-control  form-group" placeholder="Constraseña" style="margin-top:10px; margin-bottom:10px;">
-                                            <a class="btn btn-success btn-xs btn-block">Login</a>
-                                            <a class="btn btn-success btn-xs btn-block">Sign up</a>
-                                        </div>
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div> <!-- /. navbar-collapse -->
-            </div> <!-- /. container-fluid -->
-        </nav>
-    </header>
-    
-    <!-- child template -->
-    {% block content %}{% endblock %}
-    
-    <footer class="footer">
-        <div class="container">
-            <p class="text-muted">Powered by GITA</p>
+  <header>
+    <!-- navbar superior -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">       
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>           
+          <a class="navbar-brand" href="/" alt="Home">       
+            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+          </a>            
         </div>
-    </footer>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a id="menu_login" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">  
+                {% if session['name'] %}
+                  <b>Hola, {{session['name']}}</b>
+                {% else %}
+                  <b>Hola, Invitado</b>
+                {% endif %}
+              </a>
+              <ul class="dropdown-menu">                
+                {% if session['name'] %}
+                  <li><a href="#">Editar Perfil</a></li>                
+                  <li role="separator" class="divider"></li>
+                  <li><a href="{{ url_for('logout') }}">Desconectarse</a></li>
+                {% else %}
+                  <li>
+                    <form class="navbar-form navbar-left" action="{{ url_for('index') }}" name="login" method="POST">
+                      <div>
+                        <input id="email_login" name="email_login" type="text" class="form-control" placeholder="Email">
+                        <input name="pass_login" type="password" class="form-control form-group" placeholder="Contraseña" style="margin-top:10px; margin-bottom:10px;">
+                        <button type="submit" class="btn btn-success btn-xs btn-block">Login</button>
+                        <a href="{{ url_for('sign_up') }}" class="btn btn-success btn-xs btn-block">Registrarse</a>
+                      </div>
+                      <div class="respuesta-formulario-error" align="center">
+                        {% if error == "401" %}
+                          Datos ingresados son incorrectos
+                        {% endif %}
+                      </div>
+                    </form>
+                  </li>
+                {% endif %}                
+              </ul> <!-- dropdown-menu -->
+            </li> <!-- dropdown -->
+          </ul>
+        </div> <!-- /. navbar-collapse -->
+      </div> <!-- /. container-fluid -->
+    </nav>
+  </header>
+  
+  <!-- child template -->
+  {% block content %}{% endblock %}
+  
+  <footer class="footer">
+      <div class="container">
+          <p class="text-muted">Powered by GITA</p>
+      </div>
+  </footer>
 </body>
 </html>

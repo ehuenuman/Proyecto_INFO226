@@ -38,28 +38,6 @@ function valida_email() {
 	} 
 };
 
-function valida_usuario() {
-	if ( $('#usuario').val().trim().length < 6) {
-		$("#usuario_mensaje").text("Mínimo 6 caracteres");
-        switch_class($("#usuario_mensaje"), $('#usuario'), false)
-        valido = false;
-	} else {	        
-        $.getJSON($SCRIPT_ROOT + '/verifica_usuario', {
-           	usuario : $("#usuario").val()
-        }, function(data) {
-	        if (data.result == false) {
-	        	$("#usuario_mensaje").text("Usuario no disponible");
-	        	switch_class($("#usuario_mensaje"), $('#usuario'), false)
-	        	valido = false;
-	        } else {
-	        	$("#usuario_mensaje").text("Usuario disponible");
-	        	switch_class($("#usuario_mensaje"), $('#usuario'), true)
-	        	valido = true;
-	        }
-	    });		    
-	}
-};
-
 function valida_pass() {
 	if ( $('#password').val().trim().length == 0 ) {
 		$('#password_mensaje').text("Campo obligatorio");
@@ -101,8 +79,7 @@ function switch_class(span_id, input_id, disponible) {
 
 function validar_datos() {
 	valida_nombres();
-	valida_email();
-	valida_usuario();
+	valida_email();	
 	valida_pass();		
 	if ( valido == true ) {
 		$('#submit_mensaje').text("");
@@ -111,4 +88,3 @@ function validar_datos() {
 		$('#submit_mensaje').text("Revise el formulario de registro antes de continuar");
 	}	
 };
-

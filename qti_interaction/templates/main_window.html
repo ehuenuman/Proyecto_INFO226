@@ -1,16 +1,69 @@
 {% extends "layout.html" %}
+
 {% block content %}
 
 <script>
-        $(document).ready(function() {
-        var heights = $(".panel-body").map(function() {
-            return $(this).height();
-        }).get(),
-     
-        maxHeight = Math.max.apply(null, heights);
-     
-        $(".panel-body").height(maxHeight);
-        });
+	var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+
+    $(document).ready(function() {
+    	var heights = $(".panel-body").map(function() {
+        	return $(this).height();
+    }).get(),
+    	maxHeight = Math.max.apply(null, heights);
+    	$(".panel-body").height(maxHeight);
+    	
+    	{% if error == "201" %}					
+			$("#success_users").modal();			
+    	{% endif %}
+
+    	$('#success_users').on('hidden.bs.modal', function(e) {
+			show_login()
+		})
+
+		$('#login_button').click(function(e) {  			
+  			show_login()
+		});
+
+		{% if error == "401" %}			
+			show_login()
+    	{% endif %}
+
+    	{% if session['id_user'] %}    	
+    	$.getJSON($SCRIPT_ROOT + "{{ url_for('get_preguntas') }}", {
+           	id_usuario : {{session['id_user']}}
+        }, function(data) {        	
+        	var row = "";
+        	for (var i = 0; i < data.preguntas.length; i++) {        	
+        		row += "<div id='"+data.preguntas[i].id+"' class='col-md-12 container-preguntas'>";
+					row += "<div class='col-md-12'><b>Título</b>: "+data.preguntas[i].enunciado+"</div>";
+					row += "<div class='col-md-6'><b>Tipo</b>: "+data.preguntas[i].tipo+"</div>";
+					row += "<div class='col-md-6'><b>Fecha</b>: "+data.preguntas[i].fecha+"</div>";
+				row +="</div>";			
+        	}
+        	$("#mis_preguntas").html(row)
+        	
+	    });
+	    {% endif %}
+
+	    $.getJSON($SCRIPT_ROOT + "{{ url_for('get_preguntas') }}", {           	
+        }, function(data) {
+        	var row = "";
+        	for (var i = 0; i < data.preguntas.length; i++) {        	
+        		row += "<div id='"+data.preguntas[i].id+"' class='col-md-12 container-preguntas'>";
+					row += "<div class='col-md-12'><b>Título</b>: "+data.preguntas[i].enunciado+"</div>";
+					row += "<div class='col-md-6'><b>Tipo</b>: "+data.preguntas[i].tipo+"</div>";
+					row += "<div class='col-md-6'><b>Fecha</b>: "+data.preguntas[i].fecha+"</div>";
+					row += "<div class='col-md-12'><b>Autor</b>: "+data.preguntas[i].autor+"</div>";
+				row +="</div>";			
+        	}
+        	$("#ultimas_preguntas").html(row)
+	    });
+    });
+
+    function show_login() {    	
+    	$('#menu_login').click();
+		$('#input_user').focus();
+    };
 </script>
 
 <!-- Jumbotron -->
@@ -37,17 +90,22 @@
 			<div class="panel-heading">			
 				<h3 class="panel-title">Tus Preguntas</h3>
 			</div>
-			<div class="panel-body">
-				<div class="col-md-12" align="center">
-					<p><b>No estás logueado</b><br>
-						Puedes almacenar y ver tus preguntas en cualquier momento además de compartirlas con todo el mundo.
-					</p>
-				</div>	
-				<div class="col-md-6 col-md-offset-3">
-					<a class="btn btn-success btn-block" href="/sign-up">Crear Cuenta</a>
-					<a class="btn btn-success btn-block">Login</a>
+			{% if session['user'] %}
+				<div id="mis_preguntas" class="panel-body">
 				</div>
-			</div>			
+			{% else %}
+				<div class="panel-body">
+					<div class="col-md-12" align="center">
+						<p><b>No estás logueado</b><br>
+							Puedes almacenar y ver tus preguntas en cualquier momento además de compartirlas con todo el mundo.
+						</p>
+					</div>	
+					<div class="col-md-6 col-md-offset-3">
+						<a class="btn btn-success btn-block" href="{{ url_for('sign_up') }}">Crear Cuenta</a>
+						<a class="btn btn-success btn-block" onclick="show_login()">Login</a>
+					</div>
+				</div>
+			{% endif %}					
 		</div>
 	</div>
 	<div class="col-md-4">
@@ -55,9 +113,27 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">Últimas preguntas añadidas</h3>
 			</div>
-			<div class="panel-body">
+			<div id="ultimas_preguntas" class="panel-body">
 			</div>
 		</div>
 	</div>
 </div>
+
+<!-- Modal Dialog, mensaje de exito al crear usuario -->
+<div class="modal fade" id="success_users" role="dialog">
+	<div class="modal-dialog modal-sm">
+	  	<!-- Modal content-->
+	  	<div class="modal-content">
+		    <div class="modal-header">
+	    	  <button type="button" class="close" data-dismiss="modal">&times;</button>
+	      	<h4 class="modal-title">Usuario creado exitosamente</h4>
+	    	</div>
+	    	<div class="modal-body" align="center">
+	      		<p>Ahora ya puede disfrutar de los beneficios de tener un cuenta. 
+	      			<br>Ingresa con tu email y contraseña</p>
+	    	</div>	    	
+	  	</div>  
+	</div>
+</div>
+
 {% endblock %}
