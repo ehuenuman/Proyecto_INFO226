@@ -80,9 +80,26 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route("/seleccion-multiple/", methods=['GET', 'POST'])
+@app.route('/seleccion-multiple/', methods=['GET', 'POST'])
 def seleccion_multiple():
-    return render_template('selec_multiple.html')
+    print("alternativas")
+    if request.method == "POST":
+        print("POST")
+        #titulo = (request.form["t_pregunta"])
+        print("POST")
+        #descripcion = (request.form["d_pregunta"]).encode('utf-8')
+        print("POST")
+        n_alter = (request.form["n_alter"]).encode('utf-8')
+        print(n_alter)
+        print("POST")
+        alternativas = {'alternativas': []}
+        for i in range(0, int(n_alter)):
+            alternativas['alternativas'].append([(request.form["alter_" + str(i) + ""]).encode('utf-8'),
+                                                 (request.form["checkbox_" + str(i) + ""]).encode('utf-8')])
+        print(alternativas)
+        return redirect(url_for('index'))
+    else:
+        return render_template('selec_multiple.html')
 
 
 @app.route("/ordenamiento/", methods=['GET', 'POST'])
